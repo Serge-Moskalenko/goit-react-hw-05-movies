@@ -9,22 +9,21 @@ let schema = yup.object().shape({
 
 
 
-export const SearchMovies = ( {query} ) => {
+export const SearchMovies = ( {query,input} ) => {
     
-    const handleSubmit = (value, { resetForm }) => {
+    const handleSubmit = (value ) => {
         const { searchInput } = value;
 
         if (searchInput.trim() === '') {
             alert('Заполните поле поиска')
             return;
         }
-        query(searchInput)
-        resetForm()
+        query(searchInput) 
     };
 
     return (
         <HeaderStyled >
-            <Formik initialValues={{ searchInput:''}} validationSchema={schema} onSubmit={handleSubmit}  >
+            <Formik initialValues={{ searchInput:input}} validationSchema={schema} onSubmit={handleSubmit}  >
                 <FormStyled>
                     <Button type="submit"  >
                         <ImSearch />

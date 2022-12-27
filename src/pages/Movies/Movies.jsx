@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import {  useLocation } from 'react-router-dom';
+import { useState} from 'react';
+import {  useLocation, useSearchParams } from 'react-router-dom';
 import { SearchMovies } from 'components/SearchMovies/SearchMovies';
 import { ApiServise } from 'ApiServise';
 import { MoviesGalery } from 'components/MoviesGalery/MoviesGalery';
@@ -7,26 +7,22 @@ import { MoviesGalery } from 'components/MoviesGalery/MoviesGalery';
 const Api = new ApiServise();
 
 export const Movies = () => {
-    const [searchMovies, setSearchMovies] = useState(null);
     const [movie, setMovie] = useState(null);
     const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const searchQuery = searchParams.get('query') ?? '';
 
-
-     const queryParameter = q => {   
-    if (searchMovies !== q) {
-      setSearchMovies(q);
-    }
+    const queryParameter = q => {
+        if (searchQuery !== q) {
+            setSearchParams(q !== '' ? { query: q } : {});
+        }
     };
 
-    useEffect(() => {
-        if (searchMovies) {
-            Api.fetchMovie(searchMovies).then(({ data:{results} }) => { setMovie(results) })
-            }
-    }, [searchMovies])
-    
+    Api.fetchMovie(searchQuery).then(({ data: { results } }) => { setMovie(results) });
+
     return (<main>
         <div>
-            <SearchMovies query={queryParameter} />
+            <SearchMovies query={queryParameter} input={searchQuery} />
             {movie && <MoviesGalery data={movie} location={location} />}
         </div>
      
