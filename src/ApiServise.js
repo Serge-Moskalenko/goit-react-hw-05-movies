@@ -24,7 +24,6 @@ export class ApiServise {
     }
   };
 
-  // https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&language=en-US&page=1&include_adult=false
   async fetchById(id) {
     try {
       const request = `${this.url}movie/${id}?api_key=${this.key}`;

@@ -20,7 +20,7 @@ export const Cast = () => {
                     {actors.map(({ id, name, profile_path, character }) => (
                         <li key={id}>
                             <img
-                                src={url + profile_path}
+                                src={url + profile_path ?url + profile_path:'not poster' }
                                 alt={name}
                                 width={200}
                             />

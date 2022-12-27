@@ -14,11 +14,13 @@ export const Movies = () => {
 
     const queryParameter = q => {
         if (searchQuery !== q) {
-            setSearchParams(q !== '' ? { query: q } : {});
+            setSearchParams(q !== '' ? { query: q } : null);
         }
     };
 
-    Api.fetchMovie(searchQuery).then(({ data: { results } }) => { setMovie(results) });
+    if (searchQuery !== '') {
+       Api.fetchMovie(searchQuery).then(({ data: { results } }) => { setMovie(results) });
+    };
 
     return (<main>
         <div>
